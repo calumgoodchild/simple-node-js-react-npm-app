@@ -40,10 +40,8 @@ pipeline {
 			steps {
 				sh '''
 					npm install
+					./jenkins/scripts/test.sh
 				'''
-			}
-			steps {
-				sh './jenkins/scripts/test.sh'
 			}
 		}
 
