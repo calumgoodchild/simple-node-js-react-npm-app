@@ -27,18 +27,23 @@ pipeline {
 			}
 		}
 
-		stage("Build on Ubuntu") {
+		stage("Build on docker image") {
 			agent {
 				docker {
-					image 'ubuntu:latest'
-					args '-u root'
+					image 'node:10-alpine'
+					args '-p 3000:3000'
 				}
 			}
-			agent any
+			environment {
+				CI = 'true'
+			}
 			steps {
 				sh '''
-					echo "THIS IS FROM A UBUNTU DOCKER CONTAINER"
+					npm install
 				'''
+			}
+			steps {
+				sh './jenkins/scripts/test.sh'
 			}
 		}
 
